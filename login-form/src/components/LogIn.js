@@ -4,6 +4,7 @@ import SignImg from "./SignImg";
 import Form from "react-bootstrap/Form";
 import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const LogIn = () => {
   const history = useNavigate();
@@ -24,10 +25,14 @@ const LogIn = () => {
       };
     });
   };
+
   const addData = (e) => {
     e.preventDefault();
 
-    const getuserArr = localStorage.getItem("usersEntry");
+    const getuserArr = axios
+      .post(`http://192.168.2.209:3005/api/auth/login`, inpVal)
+      .then(() => setInpVal(history("/details")));
+    // const getuserArr = localStorage.getItem("usersEntry");
     console.log(getuserArr);
     const { email, password } = inpVal;
     if (

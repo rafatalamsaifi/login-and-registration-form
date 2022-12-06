@@ -4,6 +4,7 @@ import SignImg from "./SignImg";
 import Form from "react-bootstrap/Form";
 import { NavLink } from "react-router-dom";
 // import axios from "axios";
+// import axios from "axios";
 
 const Home = () => {
   const [inpVal, setInpVal] = useState({
@@ -14,6 +15,7 @@ const Home = () => {
   });
   const [data, setData] = useState([]);
   console.log(inpVal);
+
   const getData = (e) => {
     console.log(e.target.value);
     const { value, name } = e.target;
@@ -46,6 +48,8 @@ const Home = () => {
     } else {
       // const url = "http://192.168.2.209:3005/api/auth/login";
       // axios.post(url, inpVal).then((resp) => (resp.inpVal);
+
+      // axios.post(`http://192.168.2.209:3005/api/auth/register`, inpVal);
       localStorage.setItem("usersEntry", JSON.stringify([...data, inpVal]));
       console.log("Data added successfully");
     }

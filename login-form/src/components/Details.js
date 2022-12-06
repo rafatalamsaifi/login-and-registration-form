@@ -1,18 +1,22 @@
 import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import { useNavigate } from "react-router-dom";
 
 const Details = () => {
+  const [loginData, setLoginData] = useState([]);
+  console.log(loginData);
+
+  const history = useNavigate();
   const [show, setShow] = useState(false);
+
+  var todayDate = new Date().toISOString().slice(0, 10);
+  //   console.log(todayDate);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const [loginData, setLoginData] = useState([]);
-  console.log(loginData);
-  var todayDate = new Date().toISOString().slice(0, 10);
-  //   console.log(todayDate);
-  const Birthday = () => {
+  const birthday = () => {
     const getuser = localStorage.getItem("user_login");
     if (getuser && getuser.length) {
       const user = JSON.parse(getuser);
@@ -29,10 +33,13 @@ const Details = () => {
         }, 3000);
       }
     }
-    console.log("ok");
+  };
+  const userlogout = () => {
+    localStorage.removeItem("user_login");
+    history("/login");
   };
   useEffect(() => {
-    Birthday();
+    birthday();
   }, []);
   return (
     <>
@@ -41,14 +48,14 @@ const Details = () => {
       ) : (
         <>
           <h1> details page</h1>
+          <h2>{loginData[0].name}</h2>
+          <Button onClick={userlogout}>LogOut</Button>
           {loginData[0].date === todayDate ? (
             <Modal show={show} onHide={handleClose}>
               <Modal.Header closeButton>
-                <Modal.Title>Modal heading</Modal.Title>
+                <Modal.Title>{loginData[0].name}</Modal.Title>
               </Modal.Header>
-              <Modal.Body>
-                Woohoo, you're reading this text in a modal!
-              </Modal.Body>
+              <Modal.Body>Welcome to Enter Here!</Modal.Body>
               <Modal.Footer>
                 <Button variant="secondary" onClick={handleClose}>
                   Close
